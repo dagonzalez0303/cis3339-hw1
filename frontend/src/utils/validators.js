@@ -17,3 +17,14 @@ export function validateStudent({ name, studentId, phone, zip }) {
 
     return errors;
 }
+
+export function validateCourse({ courseId, name }) {
+    const errors = {};
+    if (!courseId.trim()) errors.courseId = 'Course ID is required';
+    else if (courseId.trim().length > 20) errors.courseId = 'Course ID must be 20 characters or fewer';
+
+    if (!name.trim()) errors.name = 'Course name is required';
+    else if (name.trim().length > 150) errors.name = 'Course name must be 150 characters or fewer';
+
+    return errors;
+}
