@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const toJSON = require('../utils/toJSON');
 
 const enrollmentSchema = new mongoose.Schema(
     {
@@ -13,7 +14,7 @@ const enrollmentSchema = new mongoose.Schema(
             required: [true, 'Course is required'],
         },
     },
-    { timestamps: true }
+    { timestamps: true, toJSON }
 );
 
 // A student can be enrolled in a given course only once

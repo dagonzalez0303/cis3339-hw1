@@ -4,10 +4,22 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const Student = require('./models/Student');
+const studentRoutes = require('./routes/students');
+const courseRoutes = require('./routes/courses');
+const enrollmentRoutes = require('./routes/enrollments');
+const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// REST API
+app.use('/api/students', studentRoutes);
+app.use('/api/courses', courseRoutes);
+app.use('/api/enrollments', enrollmentRoutes);
+app.use('/api', notFound);
+
+// Legacy endpoints used by the old HTML frontend; removed when the Vue frontend replaces it
 
 function toLegacyStudent(student) {
     return { name: student.name, id: student.studentId, phone: student.phone, zip: student.zip };
@@ -74,6 +86,8 @@ app.post('/delete-student', async (req, res) => {
         res.status(500).send({ error: 'Internal server error' });
     }
 });
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 

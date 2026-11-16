@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const toJSON = require('../utils/toJSON');
 
 const studentSchema = new mongoose.Schema(
     {
@@ -28,7 +29,7 @@ const studentSchema = new mongoose.Schema(
             match: [/^\d{5}(-\d{4})?$/, 'ZIP code must be 5 digits (or ZIP+4)'],
         },
     },
-    { timestamps: true }
+    { timestamps: true, toJSON }
 );
 
 studentSchema.index({ name: 1 });
